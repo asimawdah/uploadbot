@@ -44,10 +44,11 @@ def get_message_file(message: Message) -> tuple[Any, str] | None:
         ("document", ".bin"),
         ("video", ".mp4"),
         ("animation", ".mp4"),
-        ("audio", ".audio"),
+        ("audio", ".bin"),
         ("voice", ".ogg"),
         ("video_note", ".mp4"),
         ("sticker", ".webp"),
+        ("live_photo", ".mp4"),
     )
 
     for attribute, fallback_extension in candidates:
