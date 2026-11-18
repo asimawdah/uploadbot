@@ -36,6 +36,9 @@ def load_settings() -> Settings:
             "OWNER_ID must be your numeric Telegram user ID."
         ) from exc
 
+    if owner_id <= 0:
+        raise ValueError("OWNER_ID must be a positive Telegram user ID.")
+
     api_mode = os.getenv("BOT_API_MODE", "local").strip().lower()
     if api_mode not in {"local", "cloud"}:
         raise ValueError("BOT_API_MODE must be either 'local' or 'cloud'.")
