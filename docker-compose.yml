@@ -1,0 +1,31 @@
+services:
+  telegram-bot-api:
+    image: aiogram/telegram-bot-api:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      TELEGRAM_LOCAL: "1"
+    volumes:
+      - telegram-bot-api-data:/var/lib/telegram-bot-api
+    expose:
+      - "8081"
+
+  uploadbot:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      BOT_API_MODE: local
+      BOT_API_BASE_URL: http://telegram-bot-api:8081/bot
+      BOT_API_FILE_URL: http://telegram-bot-api:8081/file/bot
+      FILES_DIR: /app/files
+    depends_on:
+      - telegram-bot-api
+    volumes:
+      - ./files:/app/files
+      - telegram-bot-api-data:/var/lib/telegram-bot-api:ro
+
+volumes:
+  telegram-bot-api-data:
